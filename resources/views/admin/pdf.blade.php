@@ -54,7 +54,7 @@
                 Company Info
             </p>
             <p  style="font-size: 18px;font-family: 'Open Sans', sans-serif;color: #000;font-weight: 600;margin-bottom: 0;">
-                Masemart.com<br>For any query call: {{$setting->phone}} <br>{{$setting->address}}
+                {{env('APP_URL')}}<br>For any query call: {{$setting->phone}} <br>{{$setting->address}}
             </p>
         </div>
         <div style="width: 33.33%;margin-top: 30px;">

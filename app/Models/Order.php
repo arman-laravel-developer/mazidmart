@@ -45,15 +45,25 @@ class Order extends Model
 
     public function invoiceNumber()
     {
+        $prefix = strtoupper(substr(config('app.name'), 0, 3)); // First 3 letters of APP_NAME in uppercase
+
         $orderLastId = Order::orderBy('id', 'desc')->first();
+
         if (! $orderLastId) {
-            return'MSM0001';
+            return $prefix . '0001';
         } else {
-            $string = preg_replace("/[^0-9\.]/", '', $orderLastId->id);
-            return 'MSM' . sprintf('%04d', $string+1);
+            $lastInvoice = $orderLastId->invoice_number ?? null;
+
+            if ($lastInvoice) {
+                // Extract the numeric part from previous invoice number
+                $number = (int) filter_var($lastInvoice, FILTER_SANITIZE_NUMBER_INT);
+                return $prefix . sprintf('%04d', $number + 1);
+            }
+
+            return $prefix . '0001';
         }
     }
-    
+
     public function notification()
     {
         return $this->morphOne(Notification::class, 'notifiable');

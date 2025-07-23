@@ -52,7 +52,7 @@ class Order extends Model
         if (! $orderLastId) {
             return $prefix . '0001';
         } else {
-            $lastInvoice = $orderLastId->invoice_number ?? null;
+            $lastInvoice = $orderLastId->orderId ?? null;
 
             if ($lastInvoice) {
                 // Extract the numeric part from previous invoice number
